@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 {{-- Style --}}
 @include('includes.styles')
 {{-- end style --}}
@@ -24,7 +23,6 @@
             {{-- End Footer --}}
         </div>
     </div>
-
     {{-- Script --}}
     @include('includes.script')
     {{-- End Script --}}

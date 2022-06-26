@@ -31,14 +31,20 @@ class AuthController extends Controller
 
             // cek Credentials Login
             $user = Siswa::where('email', $request->email)->first();
+            if (!$user) {
+                return response()->json(['message' => 'Email Siswa Salah'], 400);
 
+            }
             if($user->status == "non-aktif"){
-                return response()->json(['message' => 'Akun anda belum aktif'], 400);
+                return response()->json(['message' => 'Akun siswa belum aktif, Silahkan hubungi admin'], 400);
             }
 
             // jika hash tidak sesuai muncul alert
-                       if (!Hash::check($request->password, $user->password, [])) {
-                throw new \Exception('Invalid Credentials');
+            if (!Hash::check($request->password, $user->password, [])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email or Password salah'
+                ], 401);
             }
 
             // jika berhasil 
