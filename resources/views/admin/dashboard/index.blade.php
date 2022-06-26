@@ -60,7 +60,7 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>USERS</h4>
+                    <h4>ADMIN</h4>
                   </div>
                   <div class="card-body">
                     {{ App\Models\User::count() ?? '0' }}

@@ -50,10 +50,15 @@
             <span>Agenda</span></a></li>
             @endcan
 
-            @if(auth()->user()->can('photos.index') || auth()->user()->can('videos.index'))
+            @if(auth()->user()->can('photos.index') || auth()->user()->can('videos.index') || auth()->user()->can('sliders.index') )
             <li class="menu-header">GALERI</li>
             @endif
             
+            @can('sliders.index')
+            <li class="{{ setActive('admin/slider') }}"><a class="nav-link"
+                    href="{{ route('admin.slider.index') }}"><i class="fas fa-laptop"></i>
+                    <span>Sliders</span></a></li>
+            @endcan
             @can('photos.index')
             <li class="{{ setActive('admin/photo') }}"><a class="nav-link"
                     href="{{ route('admin.photo.index') }}"><i class="fas fa-image"></i>
@@ -70,13 +75,26 @@
             <li class="menu-header">PENGATURAN</li>
             @endif
             
-            @can('sliders.index')
-            <li class="{{ setActive('admin/slider') }}"><a class="nav-link"
-                    href="{{ route('admin.slider.index') }}"><i class="fas fa-laptop"></i>
-                    <span>Sliders</span></a></li>
-            @endcan
+            {{-- @can('siswa.index') --}}
+            <li class="{{ setActive('admin/kelas') }}"><a class="nav-link"
+                href="{{ route('admin.kelas.index') }}"><i class="fas fa-hotel"></i>
+                <span>Kelas</span></a></li>
+            {{-- @endcan --}}
 
-            <li
+            {{-- @can('siswa.index') --}}
+            <li class="{{ setActive('admin/video') }}"><a class="nav-link"
+                    href="{{ route('admin.video.index') }}"><i class="fas fa-users"></i>
+                    <span>Siswa</span></a></li>
+            {{-- @endcan --}}
+             {{-- @can('siswa.index') --}}
+             <li class="{{ setActive('admin/video') }}"><a class="nav-link"
+                href="{{ route('admin.video.index') }}"><i class="fas fa-dollar-sign"></i>
+                <span>Pembayaran</span></a></li>
+        {{-- @endcan --}}
+        <li class="{{ setActive('admin/video') }}"><a class="nav-link"
+            href="{{ route('admin.video.index') }}"><i class="fas fa-user"></i>
+            <span>Admin</span></a></li>
+            {{-- <li
                 class="dropdown {{ setActive('admin/role'). setActive('admin/permission'). setActive('admin/user') }}">
                 @if(auth()->user()->can('roles.index') || auth()->user()->can('permission.index') || auth()->user()->can('users.index'))
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-users"></i><span>Users
@@ -103,7 +121,7 @@
                         </li>
                     @endcan
                 </ul>
-            </li>
+            </li> --}}
         </ul>
     </aside>
 </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\KelasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +66,7 @@ Route::prefix('admin')->group(function () {
 
         //slider
         Route::resource('/slider', SliderController::class, ['except' => ['show', 'create', 'edit', 'update'] ,'as' => 'admin']);
+        Route::resource('/kelas', KelasController::class, ['except' => ['destroy'] ,'as' => 'admin']);
     });
 
 });
