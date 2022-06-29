@@ -89,7 +89,10 @@
              {{-- @can('siswa.index') --}}
              <li class="{{ setActive('admin/video') }}"><a class="nav-link"
                 href="{{ route('admin.video.index') }}"><i class="fas fa-dollar-sign"></i>
-                <span>Pembayaran</span></a></li>
+                <span>Transaksi</span></a></li>
+                <li class="{{ setActive('admin/pembayaran') }}"><a class="nav-link"
+                    href="{{ route('admin.pembayaran.index') }}"><i class="fas fa-dollar-sign"></i>
+                    <span>Pembayaran</span></a></li>
         {{-- @endcan --}}
         <li class="{{ setActive('admin/user') }}"><a class="nav-link"
             href="{{ route('admin.user.index') }}"><i class="fas fa-user"></i>

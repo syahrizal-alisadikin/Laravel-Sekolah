@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PhotoController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\PembayaranController;
 use App\Http\Controllers\Admin\SiswaController;
 
 /*
@@ -70,5 +71,6 @@ Route::prefix('admin')->group(function () {
         Route::resource('/slider', SliderController::class, ['except' => ['show', 'create', 'edit', 'update'], 'as' => 'admin']);
         Route::resource('/kelas', KelasController::class, ['except' => ['destroy'], 'as' => 'admin']);
         Route::resource('/siswa', SiswaController::class, ['except' => ['show'], 'as' => 'admin']);
+        Route::resource('/pembayaran', PembayaranController::class, ['except' => ['show'], 'as' => 'admin']);
     });
 });
