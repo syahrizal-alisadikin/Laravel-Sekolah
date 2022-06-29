@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tagihan;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -14,7 +18,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::latest()->when(request()->q, function ($transactions) {
+            $transactions->whereHas('siswa', function ($query) {
+                $query->where('name', 'like', '%' . request()->q . '%');
+            });
+        })->paginate(10);
+
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     /**
@@ -24,7 +34,14 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $tagihan = Tagihan::all();
+        $siswa = Siswa::all();
+        $kelas = Kelas::all();
+        return view('admin.transactions.create', [
+            'tagihan' => $tagihan,
+            'siswa' => $siswa,
+            'kelas' => $kelas
+        ]);
     }
 
     /**

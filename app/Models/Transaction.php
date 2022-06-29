@@ -12,9 +12,9 @@ class Transaction extends Model
 
     protected $guarded = ["id"];
 
-    public function user()
+    public function siswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Siswa::class);
     }
 
     public function tagihan()

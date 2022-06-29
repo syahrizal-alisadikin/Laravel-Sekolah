@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tagihan_id');
             $table->enum('status', ["PENDING", "SUCCESS", "FAILED"]);
             $table->string('midtrans_id')->nullable();
+            $table->date('nominal')->nullable();
             $table->date('tanggal_bayar')->nullable();
             $table->softDeletes();
             $table->timestamps();

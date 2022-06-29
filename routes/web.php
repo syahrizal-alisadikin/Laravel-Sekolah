@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\PembayaranController;
 use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,8 +70,18 @@ Route::prefix('admin')->group(function () {
 
         //slider
         Route::resource('/slider', SliderController::class, ['except' => ['show', 'create', 'edit', 'update'], 'as' => 'admin']);
+
+        // Kelas
         Route::resource('/kelas', KelasController::class, ['except' => ['destroy'], 'as' => 'admin']);
+
+        // Siswa
         Route::resource('/siswa', SiswaController::class, ['except' => ['show'], 'as' => 'admin']);
+
+        // Pembayaran
         Route::resource('/pembayaran', PembayaranController::class, ['except' => ['show'], 'as' => 'admin']);
+        Route::get('/pembayaran/{id}', [PembayaranController::class, 'getNominal'])->name('admin.pembayaran.getNominal');
+
+        // Transaction
+        Route::resource('/transactions', TransactionController::class, ['except' => ['show'], 'as' => 'admin']);
     });
 });

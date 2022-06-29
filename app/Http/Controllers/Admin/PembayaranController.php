@@ -127,4 +127,12 @@ class PembayaranController extends Controller
             ]);
         }
     }
+
+    public function getNominal($id)
+    {
+        $pembayaran = Tagihan::findOrFail($id);
+        return response()->json([
+            'nominal' => $pembayaran->nominal
+        ]);
+    }
 }
