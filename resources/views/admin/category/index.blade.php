@@ -18,11 +18,11 @@
                     <form action="{{ route('admin.category.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                @can('categories.create')
+                                {{-- @can('categories.create') --}}
                                     <div class="input-group-prepend">
                                         <a href="{{ route('admin.category.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
-                                @endcan
+                                {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
                                        placeholder="cari berdasarkan nama kategori">
                                 <div class="input-group-append">
@@ -47,17 +47,17 @@
                                     <th scope="row" style="text-align: center">{{ ++$no + ($categories->currentPage()-1) * $categories->perPage() }}</th>
                                     <td>{{ $category->name }}</td>
                                     <td class="text-center">
-                                        @can('categories.edit')
+                                        {{-- @can('categories.edit') --}}
                                             <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
-                                        @endcan
+                                        {{-- @endcan --}}
                                         
-                                        @can('categories.delete')
+                                        {{-- @can('categories.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $category->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>  
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

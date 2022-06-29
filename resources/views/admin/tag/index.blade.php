@@ -18,11 +18,11 @@
                     <form action="{{ route('admin.tag.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                @can('tags.create')
+                                {{-- @can('tags.create') --}}
                                     <div class="input-group-prepend">
                                         <a href="{{ route('admin.tag.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
-                                @endcan
+                                {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
                                        placeholder="cari berdasarkan nama tag">
                                 <div class="input-group-append">
@@ -47,17 +47,17 @@
                                     <th scope="row" style="text-align: center">{{ ++$no + ($tags->currentPage()-1) * $tags->perPage() }}</th>
                                     <td>{{ $tag->name }}</td>
                                     <td class="text-center">
-                                        @can('tags.edit')
+                                        {{-- @can('tags.edit') --}}
                                             <a href="{{ route('admin.tag.edit', $tag->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
-                                        @endcan
+                                        {{-- @endcan --}}
                                         
-                                        @can('tags.delete')
+                                        {{-- @can('tags.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $tag->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

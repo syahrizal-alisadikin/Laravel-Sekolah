@@ -62,11 +62,11 @@
                                     <th scope="row" style="text-align: center">{{ ++$no + ($sliders->currentPage()-1) * $sliders->perPage() }}</th>
                                     <td class="text-center"><img src="{{ $slider->image }}" style="width: 300px"></td>
                                     <td class="text-center">
-                                        @can('sliders.delete')
+                                        {{-- @can('sliders.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $slider->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

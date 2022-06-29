@@ -18,11 +18,11 @@
                     <form action="{{ route('admin.video.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                @can('videos.create')
+                                {{-- @can('videos.create') --}}
                                     <div class="input-group-prepend">
                                         <a href="{{ route('admin.video.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
-                                @endcan
+                                {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
                                        placeholder="cari berdasarkan judul video">
                                 <div class="input-group-append">
@@ -51,17 +51,17 @@
                                         <iframe width="300" height="150" src="{{ $video->embed }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     </td>
                                     <td class="text-center">
-                                        @can('videos.edit')
+                                        {{-- @can('videos.edit') --}}
                                             <a href="{{ route('admin.video.edit', $video->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
-                                        @endcan
+                                        {{-- @endcan --}}
                                         
-                                        @can('videos.delete')
+                                        {{-- @can('videos.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $video->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

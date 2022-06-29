@@ -18,11 +18,11 @@
                     <form action="{{ route('admin.post.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                @can('posts.create')
+                                {{-- @can('posts.create') --}}
                                     <div class="input-group-prepend">
                                         <a href="{{ route('admin.post.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
-                                @endcan
+                                {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
                                        placeholder="cari berdasarkan judul berita">
                                 <div class="input-group-append">
@@ -49,17 +49,17 @@
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->category->name }}</td>
                                     <td class="text-center">
-                                        @can('posts.edit')
+                                        {{-- @can('posts.edit') --}}
                                             <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
-                                        @endcan
+                                        {{-- @endcan --}}
 
-                                        @can('posts.delete')
+                                        {{-- @can('posts.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $post->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

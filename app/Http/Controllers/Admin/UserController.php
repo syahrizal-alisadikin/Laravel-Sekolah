@@ -9,20 +9,20 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['permission:users.index|users.create|users.edit|users.delete']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:users.index|users.create|users.edit|users.delete']);
+    // }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users = User::latest()->when(request()->q, function($users) {
-            $users = $users->where('name', 'like', '%'. request()->q . '%');
+        $users = User::latest()->when(request()->q, function ($users) {
+            $users = $users->where('name', 'like', '%' . request()->q . '%');
         })->paginate(10);
 
         return view('admin.user.index', compact('users'));
@@ -56,16 +56,17 @@ class UserController extends Controller
         $user = User::create([
             'name'      => $request->input('name'),
             'email'     => $request->input('email'),
+            'roles'     => $request->input('roles'),
             'password'  => bcrypt($request->input('password'))
         ]);
 
         //assign role
-        $user->assignRole($request->input('role'));
+        // $user->assignRole($request->input('role'));
 
-        if($user){
+        if ($user) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.user.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.user.index')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -94,31 +95,32 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name'      => 'required',
-            'email'     => 'required|email|unique:users,email,'.$user->id
+            'email'     => 'required|email|unique:users,email,' . $user->id
         ]);
-
         $user = User::findOrFail($user->id);
 
-        if($request->input('password') == "") {
+        if ($request->input('password') == "") {
             $user->update([
                 'name'      => $request->input('name'),
-                'email'     => $request->input('email')
+                'email'     => $request->input('email'),
+                'roles'     => $request->input('roles')
             ]);
         } else {
             $user->update([
                 'name'      => $request->input('name'),
                 'email'     => $request->input('email'),
+                'roles'     => $request->input('roles'),
                 'password'  => bcrypt($request->input('password'))
             ]);
         }
 
         //assign role
-        $user->syncRoles($request->input('role'));
+        // $user->syncRoles($request->input('role'));
 
-        if($user){
+        if ($user) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.user.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.user.index')->with(['error' => 'Data Gagal Diupdate!']);
         }
@@ -136,11 +138,11 @@ class UserController extends Controller
         $user->delete();
 
 
-        if($user){
+        if ($user) {
             return response()->json([
                 'status' => 'success'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error'
             ]);

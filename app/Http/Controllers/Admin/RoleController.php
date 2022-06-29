@@ -14,15 +14,15 @@ class RoleController extends Controller
         $this->middleware(['permission:roles.index|roles.create|roles.edit|roles.delete']);
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $roles = Role::latest()->when(request()->q, function($roles) {
-            $roles = $roles->where('name', 'like', '%'. request()->q . '%');
+        $roles = Role::latest()->when(request()->q, function ($roles) {
+            $roles = $roles->where('name', 'like', '%' . request()->q . '%');
         })->paginate(5);
 
         return view('admin.role.index', compact('roles'));
@@ -58,10 +58,10 @@ class RoleController extends Controller
         //assign permission to role
         $role->syncPermissions($request->input('permissions'));
 
-        if($role){
+        if ($role) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.role.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.role.index')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -89,9 +89,9 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $this->validate($request, [
-            'name' => 'required|unique:roles,name,'.$role->id
+            'name' => 'required|unique:roles,name,' . $role->id
         ]);
-        
+
         $role = Role::findOrFail($role->id);
         $role->update([
             'name' => $request->input('name')
@@ -100,10 +100,10 @@ class RoleController extends Controller
         //assign permission to role
         $role->syncPermissions($request->input('permissions'));
 
-        if($role){
+        if ($role) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.role.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.role.index')->with(['error' => 'Data Gagal Diupdate!']);
         }
@@ -122,11 +122,11 @@ class RoleController extends Controller
         $role->revokePermissionTo($permissions);
         $role->delete();
 
-        if($role){
+        if ($role) {
             return response()->json([
                 'status' => 'success'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error'
             ]);

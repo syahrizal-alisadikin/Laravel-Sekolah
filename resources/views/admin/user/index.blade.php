@@ -18,11 +18,11 @@
                     <form action="{{ route('admin.user.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                @can('users.create')
+                                {{-- @can('users.create') --}}
                                     <div class="input-group-prepend">
                                         <a href="{{ route('admin.user.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
-                                @endcan
+                                {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
                                        placeholder="cari berdasarkan nama user">
                                 <div class="input-group-append">
@@ -47,25 +47,20 @@
                                 <tr>
                                     <th scope="row" style="text-align: center">{{ ++$no + ($users->currentPage()-1) * $users->perPage() }}</th>
                                     <td>{{ $user->name }}</td>
-                                    <td>
-                                        @if(!empty($user->getRoleNames()))
-                                            @foreach($user->getRoleNames() as $role)
-                                                <label class="badge badge-success">{{ $role }}</label>
-                                            @endforeach
-                                        @endif
-                                    </td>
+                                    <td>{{ $user->roles }}</td>
+                                        
                                     <td class="text-center">
-                                        @can('users.edit')
+                                        {{-- @can('users.edit') --}}
                                             <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
-                                        @endcan
+                                        {{-- @endcan --}}
                                         
-                                        @can('users.delete')
+                                        {{-- @can('users.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $user->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

@@ -76,11 +76,11 @@
                                     <td><img src="{{ $photo->image }}" style="width: 150px"></td>
                                     <td>{{ $photo->caption }}</td>
                                     <td class="text-center">
-                                        @can('photos.delete')
+                                        {{-- @can('photos.delete') --}}
                                             <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $photo->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        @endcan
+                                        {{-- @endcan --}}
                                     </td>
                                 </tr>
                             @endforeach

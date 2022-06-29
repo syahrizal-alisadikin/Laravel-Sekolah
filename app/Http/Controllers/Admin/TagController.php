@@ -9,12 +9,12 @@ use App\Http\Controllers\Controller;
 
 class TagController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['permission:tags.index|tags.create|tags.edit|tags.delete']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:tags.index|tags.create|tags.edit|tags.delete']);
+    // }
 
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +22,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::latest()->when(request()->q, function($tags) {
-            $tags = $tags->where('name', 'like', '%'. request()->q . '%');
+        $tags = Tag::latest()->when(request()->q, function ($tags) {
+            $tags = $tags->where('name', 'like', '%' . request()->q . '%');
         })->paginate(10);
 
         return view('admin.tag.index', compact('tags'));
@@ -53,13 +53,13 @@ class TagController extends Controller
 
         $tag = Tag::create([
             'name' => $request->input('name'),
-            'slug' => Str::slug($request->input('name'), '-') 
+            'slug' => Str::slug($request->input('name'), '-')
         ]);
 
-        if($tag){
+        if ($tag) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.tag.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.tag.index')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -86,19 +86,19 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         $this->validate($request, [
-            'name' => 'required|unique:tags,name,'.$tag->id
+            'name' => 'required|unique:tags,name,' . $tag->id
         ]);
 
         $tag = Tag::findOrFail($tag->id);
         $tag->update([
             'name' => $request->input('name'),
-            'slug' => Str::slug($request->input('name'), '-') 
+            'slug' => Str::slug($request->input('name'), '-')
         ]);
 
-        if($tag){
+        if ($tag) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.tag.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.tag.index')->with(['error' => 'Data Gagal Diupdate!']);
         }
@@ -115,11 +115,11 @@ class TagController extends Controller
         $tag = Tag::findOrFail($id);
         $tag->delete();
 
-        if($tag){
+        if ($tag) {
             return response()->json([
                 'status' => 'success'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error'
             ]);

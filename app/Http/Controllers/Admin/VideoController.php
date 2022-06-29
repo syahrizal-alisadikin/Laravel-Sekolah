@@ -13,10 +13,10 @@ class VideoController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware(['permission:videos.index|videos.create|videos.edit|videos.delete']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:videos.index|videos.create|videos.edit|videos.delete']);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -25,8 +25,8 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::latest()->when(request()->q, function($videos) {
-            $videos = $videos->where('name', 'like', '%'. request()->q . '%');
+        $videos = Video::latest()->when(request()->q, function ($videos) {
+            $videos = $videos->where('name', 'like', '%' . request()->q . '%');
         })->paginate(10);
 
         return view('admin.video.index', compact('videos'));
@@ -60,10 +60,10 @@ class VideoController extends Controller
             'embed' => $request->input('embed')
         ]);
 
-        if($video){
+        if ($video) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.video.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.video.index')->with(['error' => 'Data Gagal Disimpan!']);
         }
@@ -100,10 +100,10 @@ class VideoController extends Controller
             'embed' => $request->input('embed')
         ]);
 
-        if($video){
+        if ($video) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.video.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.video.index')->with(['error' => 'Data Gagal Diupdate!']);
         }
@@ -120,11 +120,11 @@ class VideoController extends Controller
         $video = Video::findOrFail($id);
         $video->delete();
 
-        if($video){
+        if ($video) {
             return response()->json([
                 'status' => 'success'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error'
             ]);

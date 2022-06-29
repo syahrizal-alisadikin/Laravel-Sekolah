@@ -4,27 +4,27 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Agenda</h1>
+            <h1>Users</h1>
         </div>
 
         <div class="section-body">
 
             <div class="card">
                 <div class="card-header">
-                    <h4><i class="fas fa-bell"></i> Agenda</h4>
+                    <h4><i class="fas fa-users"></i> Siswa</h4>
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('admin.event.index') }}" method="GET">
+                    <form action="{{ route('admin.siswa.index') }}" method="GET">
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                {{-- @can('events.create') --}}
+                                {{-- @can('users.create') --}}
                                     <div class="input-group-prepend">
-                                        <a href="{{ route('admin.event.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
+                                        <a href="{{ route('admin.siswa.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
                                 {{-- @endcan --}}
                                 <input type="text" class="form-control" name="q"
-                                       placeholder="cari berdasarkan judul agenda">
+                                       placeholder="cari berdasarkan nama siswa">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> CARI
                                     </button>
@@ -37,38 +37,47 @@
                             <thead>
                             <tr>
                                 <th scope="col" style="text-align: center;width: 6%">NO.</th>
-                                <th scope="col">JUDUL AGENDA</th>
-                                <th scope="col">LOKASI</th>
-                                <th scope="col">TANGGAL</th>
+                                <th scope="col">NISN</th>
+                                <th scope="col">NAMA</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">PHONE</th>
+                                <th scope="col">KELAS</th>
                                 <th scope="col" style="width: 15%;text-align: center">AKSI</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($events as $no => $event)
+                            @forelse ($siswa as $no => $item)
                                 <tr>
-                                    <th scope="row" style="text-align: center">{{ ++$no + ($events->currentPage()-1) * $events->perPage() }}</th>
-                                    <td>{{ $event->title }}</td>
-                                    <td>{{ $event->location }}</td>
-                                    <td>{{ $event->date }}</td>
+                                    <th scope="row" style="text-align: center">{{ ++$no + ($siswa->currentPage()-1) * $siswa->perPage() }}</th>
+                                    <td>{{ $item->nisn ?? "-" }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->kelas->name }}</td>
+                                        
                                     <td class="text-center">
-                                        {{-- @can('events.edit') --}}
-                                            <a href="{{ route('admin.event.edit', $event->id) }}" class="btn btn-sm btn-primary">
+                                        {{-- @can('users.edit') --}}
+                                            <a href="{{ route('admin.siswa.edit', $item->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                         {{-- @endcan --}}
-
-                                        {{-- @can('events.delete') --}}
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $event->id }}">
+                                        
+                                        {{-- @can('users.delete') --}}
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $item->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         {{-- @endcan --}}
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div style="text-align: center">
-                            {{$events->links("vendor.pagination.bootstrap-4")}}
+                            {{$siswa->links("vendor.pagination.bootstrap-4")}}
                         </div>
                     </div>
                 </div>
@@ -99,8 +108,8 @@
 
                     //ajax delete
                     jQuery.ajax({
-                        url: "/admin/event/"+id,
-                        data:     {
+                        url: "/admin/siswa/"+id,
+                        data:   {
                             "id": id,
                             "_token": token
                         },

@@ -17,10 +17,10 @@ class PostController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware(['permission:posts.index|posts.create|posts.edit|posts.delete']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:posts.index|posts.create|posts.edit|posts.delete']);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -29,8 +29,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->when(request()->q, function($posts) {
-            $posts = $posts->where('title', 'like', '%'. request()->q . '%');
+        $posts = Post::latest()->when(request()->q, function ($posts) {
+            $posts = $posts->where('title', 'like', '%' . request()->q . '%');
         })->paginate(10);
 
         return view('admin.post.index', compact('posts'));
@@ -56,7 +56,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'image'         => 'required|image|mimes:jpeg,jpg,png|max:2000',
             'title'         => 'required|unique:posts',
             'category_id'   => 'required',
@@ -72,21 +72,20 @@ class PostController extends Controller
             'title'       => $request->input('title'),
             'slug'        => Str::slug($request->input('title'), '-'),
             'category_id' => $request->input('category_id'),
-            'content'     => $request->input('content')  
+            'content'     => $request->input('content')
         ]);
 
         //assign tags
         $post->tags()->attach($request->input('tags'));
         $post->save();
 
-        if($post){
+        if ($post) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.post.index')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.post.index')->with(['error' => 'Data Gagal Disimpan!']);
         }
-
     }
 
     /**
@@ -111,26 +110,25 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $this->validate($request,[
-            'title'         => 'required|unique:posts,title,'.$post->id,
+        $this->validate($request, [
+            'title'         => 'required|unique:posts,title,' . $post->id,
             'category_id'   => 'required',
             'content'       => 'required',
         ]);
 
         if ($request->file('image') == "") {
-        
+
             $post = Post::findOrFail($post->id);
             $post->update([
                 'title'       => $request->input('title'),
                 'slug'        => Str::slug($request->input('title'), '-'),
                 'category_id' => $request->input('category_id'),
-                'content'     => $request->input('content')  
+                'content'     => $request->input('content')
             ]);
-
         } else {
 
             //remove old image
-            Storage::disk('local')->delete('public/posts/'.$post->image);
+            Storage::disk('local')->delete('public/posts/' . $post->image);
 
             //upload new image
             $image = $request->file('image');
@@ -142,18 +140,17 @@ class PostController extends Controller
                 'title'       => $request->input('title'),
                 'slug'        => Str::slug($request->input('title'), '-'),
                 'category_id' => $request->input('category_id'),
-                'content'     => $request->input('content')  
+                'content'     => $request->input('content')
             ]);
-
         }
 
         //assign tags
         $post->tags()->sync($request->input('tags'));
 
-        if($post){
+        if ($post) {
             //redirect dengan pesan sukses
             return redirect()->route('admin.post.index')->with(['success' => 'Data Berhasil Diupdate!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('admin.post.index')->with(['error' => 'Data Gagal Diupdate!']);
         }
@@ -168,14 +165,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $image = Storage::disk('local')->delete('public/posts/'.basename($post->image));
+        $image = Storage::disk('local')->delete('public/posts/' . basename($post->image));
         $post->delete();
 
-        if($post){
+        if ($post) {
             return response()->json([
                 'status' => 'success'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error'
             ]);

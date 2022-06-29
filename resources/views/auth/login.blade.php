@@ -12,14 +12,29 @@
                 </div>
 
                 <div class="card card-primary">
-                    <div class="card-header">
-                        <h4>Login</h4>
-                    </div>
+                    
+                    {{-- <div class="card-header text-center mx-3">
+                        
+                        
+                    </div> --}}
 
+                   
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}" class="needs-validation"
                             novalidate="">
                             @csrf
+                            @if(session()->has('error'))
+                            <div class="form-group text-center">
+                           
+                                <div class="alert alert-danger text-center">
+                                    {{ session()->get('error') }}
+                                </div> 
+                            </div>
+                            @else
+                            <div class="form-group text-center">
+                            <h4>Login</h4>
+                            </div>
+                                @endif
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input id="email" type="email"
