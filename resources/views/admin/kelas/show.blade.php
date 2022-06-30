@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <a href="{{ route('admin.kelas.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
+                                        <a href="{{ route('admin.siswa.create') }}" class="btn btn-primary" style="padding-top: 10px;"><i class="fa fa-plus-circle"></i> TAMBAH</a>
                                     </div>
                                 <input type="text" class="form-control" value="{{ request()->q }}" name="q"
                                        placeholder="cari berdasarkan nama siswa">
