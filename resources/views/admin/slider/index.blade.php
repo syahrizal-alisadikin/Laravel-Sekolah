@@ -9,7 +9,7 @@
 
         <div class="section-body">
 
-            @can('sliders.create')
+            {{-- @can('sliders.create') --}}
                 <div class="card">
                     <div class="card-header">
                         <h4><i class="fas fa-laptop"></i> Upload Slider</h4>
@@ -38,7 +38,7 @@
 
                     </div>
                 </div>
-            @endcan
+            {{-- @endcan --}}
 
             <div class="card">
                 <div class="card-header">

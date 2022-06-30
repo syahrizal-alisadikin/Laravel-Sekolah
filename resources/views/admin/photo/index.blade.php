@@ -9,7 +9,7 @@
 
         <div class="section-body">
 
-            @can('photos.create')
+            {{-- @can('photos.create') --}}
                 <div class="card">
                     <div class="card-header">
                         <h4><i class="fas fa-image"></i> Upload Foto</h4>
@@ -50,7 +50,7 @@
 
                     </div>
                 </div>
-            @endcan
+            {{-- @endcan --}}
 
             <div class="card">
                 <div class="card-header">
