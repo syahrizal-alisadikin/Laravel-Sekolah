@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\User;
 use Exception;
@@ -33,9 +34,8 @@ class AuthController extends Controller
             $user = Siswa::where('email', $request->email)->first();
             if (!$user) {
                 return response()->json(['message' => 'Email Siswa Salah'], 400);
-
             }
-            if($user->status == "non-aktif"){
+            if ($user->status == "non-aktif") {
                 return response()->json(['message' => 'Akun siswa belum aktif, Silahkan hubungi admin'], 400);
             }
 
@@ -73,14 +73,14 @@ class AuthController extends Controller
                 'phone' => ['required', 'string', 'max:255', 'unique:siswas'],
                 'alamat' => ['required', 'string', 'max:255'],
                 'kelas_id' => ['required', 'integer'],
-                'jenis_kelamin' => ['required','in:laki-laki,perempuan'],
+                'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
-            
+
 
             Siswa::create([
                 'name' => $request->name,
@@ -105,5 +105,14 @@ class AuthController extends Controller
                 'error' => $error
             ], 'Authentication failed', 500);
         }
+    }
+
+    public function kelas()
+    {
+        $kelas = Kelas::all();
+
+        return ResponseFormatter::success([
+            $kelas
+        ], 'Kelas Berhasil diambil');
     }
 }
