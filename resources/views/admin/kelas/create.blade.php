@@ -33,8 +33,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi Kelas</label>
-                                    <textarea name="deskripsi" class="form-control" id="" cols="30" placeholder="masukan deskripsi" rows="10">{{ old("deskripsi") }}</textarea>
-                                    @error('deskripsi')
+                                    <textarea name="description" class="form-control" id="" cols="30" placeholder="masukan deskripsi" rows="10">{{ old("description") }}</textarea>
+                                    @error('description')
                                     <div class="invalid-feedback" style="display: block">
                                         {{ $message }}
                                     </div>
