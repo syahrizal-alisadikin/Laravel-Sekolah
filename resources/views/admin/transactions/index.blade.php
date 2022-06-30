@@ -52,17 +52,20 @@
                                     <th scope="row" style="text-align: center">{{ ++$no + ($transactions->currentPage()-1) * $transactions->perPage() }}</th>
                                     <td>{{ $transaction->siswa->name }}</td>
                                     <td>{{ $transaction->siswa->kelas->name }}</td>
-                                    <td>{!! $transaction->tagian->name ?? "-" !!}</td>
+                                    <td>{!! $transaction->tagihan->name ?? "-" !!}</td>
                                     <td>{{ moneyFormat($transaction->nominal) }}</td>
+                                    <td>{!!  $transaction->status == "PENDING" ? "<button class='btn btn btn-sm btn-warning'>PENDING</button>" : ($transaction->status == "SUCCESS" ? "<button class='btn btn btn-sm btn-success'>SUCCESS</button>" : "<button class='btn btn btn-sm btn-danger'>FAILED</button>")  !!}</td>
+                                    <td>{!! $transaction->tanggal_bayar ?? "-" !!}</td>
+
                                     <td class="text-center">
                                         {{-- @can('posts.edit') --}}
-                                            <a href="{{ route('admin.pembayaran.edit', $post->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="{{ route('admin.transactions.edit', $transaction->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                         {{-- @endcan --}}
 
                                         {{-- @can('posts.delete') --}}
-                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $post->id }}">
+                                            <button onClick="Delete(this.id)" class="btn btn-sm btn-danger" id="{{ $transaction->id }}">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         {{-- @endcan --}}
@@ -108,7 +111,7 @@
 
                     //ajax delete
                     jQuery.ajax({
-                        url: "/admin/pembayaran/"+id,
+                        url: "/admin/transactions/"+id,
                         data:     {
                             "id": id,
                             "_token": token

@@ -52,7 +52,38 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->select == "siswa") {
+            // Validasi
+            $request->validate([
+                'siswa_id' => 'required',
+                'tagihan_id' => 'required',
+            ], [
+                'siswa_id.required' => 'Siswa harus diisi!',
+                'tagihan_id.required' => 'Tagihan harus diisi!',
+
+            ]);
+
+            // Simpan Data
+            $transaction = Transaction::create([
+                'siswa_id' => $request->siswa_id,
+                'tagihan_id' => $request->tagihan_id,
+                'status' => 'PENDING',
+                'nominal' => $request->nominal,
+            ]);
+
+            // Redirect
+            return redirect()->route('admin.transactions.index')->with('success', 'Data ' . $transaction->siswa->name . ' berhasil ditambahkan!');
+        } else {
+            // Validasi
+            $request->validate([
+                'kelas_id' => 'required',
+                'tagihan_id' => 'required',
+            ], [
+                'kelas_id.required' => 'Kelas harus diisi!',
+                'tagihan_id.required' => 'Tagihan harus diisi!',
+
+            ]);
+        }
     }
 
     /**
@@ -72,9 +103,10 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaction $transaction)
     {
-        //
+        $tagihan = Tagihan::all();
+        return view('admin.transactions.edit', compact('transaction', 'tagihan'));
     }
 
     /**
@@ -84,9 +116,15 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Transaction $transaction)
     {
-        //
+        //update transaction
+        $transaction->update([
+            'tagihan_id' => $request->tagihan_id,
+            'nominal' => $request->nominal,
+        ]);
+
+        return redirect()->route('admin.transactions.index')->with('success', 'Data ' . $transaction->siswa->name . ' berhasil diubah!');
     }
 
     /**
@@ -97,6 +135,17 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //get Transction
+        $transaction = Transaction::findOrFail($id);
+        if ($transaction) {
+            $transaction->delete();
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
     }
 }
