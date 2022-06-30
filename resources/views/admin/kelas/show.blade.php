@@ -51,7 +51,7 @@
                                     <td>{{ $item->phone ?? "-" }}</td>
                                     <td>{!! $item->status == "aktif" ? "<span  class='badge badge-success'>Aktif</span>" :  "<span  class='badge badge-info'>Tidak Aktif</span>" !!}</td>
                                     <td class="text-center">
-                                            <a href="{{ route('admin.kelas.edit', $item->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
 
