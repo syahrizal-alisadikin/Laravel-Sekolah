@@ -8,6 +8,7 @@ use App\Http\Controllers\API\PhotoController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\SliderController;
 use App\Http\Controllers\API\VideoController;
+use App\Http\Controllers\API\SiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,3 +59,6 @@ Route::get('/homepage/photo', [PhotoController::class, 'PhotoHomepage']);
 //video
 Route::get('/video', [VideoController::class, 'index']);
 Route::get('/homepage/video', [VideoController::class, 'VideoHomepage']);
+
+// Friend List
+Route::get('/friend', [SiswaController::class, 'friend']);
