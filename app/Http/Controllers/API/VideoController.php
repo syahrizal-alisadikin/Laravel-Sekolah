@@ -27,7 +27,7 @@ class VideoController extends Controller
      */
     public function VideoHomePage()
     {
-        $videos = Video::latest()->take(2)->get();
+        $videos = Video::latest()->paginate(2);
         return response()->json([
             "response" => [
                 "status"    => 200,
