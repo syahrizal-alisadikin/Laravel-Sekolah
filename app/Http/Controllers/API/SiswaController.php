@@ -11,7 +11,7 @@ class SiswaController extends Controller
 {
     public function friend(Request $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
         // $friend = Siswa::where('kelas_id', $request->user()->kelas_id)->get();
 
         return response()->json([
