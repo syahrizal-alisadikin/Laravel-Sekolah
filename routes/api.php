@@ -61,4 +61,4 @@ Route::get('/video', [VideoController::class, 'index']);
 Route::get('/homepage/video', [VideoController::class, 'VideoHomepage']);
 
 // Friend List
-Route::get('/friend', [SiswaController::class, 'friend']);
+Route::get('/friend', [SiswaController::class, 'friend'])->middleware('auth:sanctum');
