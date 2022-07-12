@@ -13,15 +13,14 @@ class SiswaController extends Controller
     {
         // $user = Auth::user(); //Bisa juga menggunakan $request->user()
         // $user = $request->user();
-        $user = Auth::guard('api')->user();
-        // $friend = Siswa::where('kelas_id', $request->user()->kelas_id)->get();
+        $friend = Siswa::where('kelas_id', $request->user()->kelas_id)->get();
 
         return response()->json([
             "response" => [
                 "status"    => 200,
                 "message"   => "List Data Friend"
             ],
-            "data" => $user
+            "data" => $friend
         ], 200);
     }
 }
