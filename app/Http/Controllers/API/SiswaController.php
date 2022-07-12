@@ -13,6 +13,8 @@ class SiswaController extends Controller
     {
         // $user = Auth::user(); //Bisa juga menggunakan $request->user()
         // $user = $request->user();
+
+        dd($request->all());
         $friend = Siswa::where('kelas_id', $request->user()->kelas_id)
             ->when($request->name, function ($query) use ($request) {
                 return $query->where('name', 'like', '%' . $request->name . '%');
