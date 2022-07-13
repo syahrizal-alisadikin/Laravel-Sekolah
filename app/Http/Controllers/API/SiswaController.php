@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -32,6 +33,19 @@ class SiswaController extends Controller
                 "message"   => "List Data Friend"
             ],
             "data" => $friend
+        ], 200);
+    }
+
+    public function transaction(Request $request)
+    {
+        $transactions = Transaction::where('siswa_id', $request->user()->siswa->id)->get();
+
+        return response()->json([
+            "response" => [
+                "status"    => 200,
+                "message"   => "List Data Transaction " . $request->user()->name
+            ],
+            "data" => $transactions
         ], 200);
     }
 }
