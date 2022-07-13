@@ -86,7 +86,20 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                    </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Pembayaran</label>
+                            <select name="status" class="form-select" id="">
+                                <option value="PENDING" >PENDING</option>
+                                <option value="SUCCESS" >SUCCESS</option>
+
+                            </select>
+                            @error('status')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                        
                        
                         <button class="btn btn-primary mr-1 btn-submit" type="submit"><i class="fa fa-paper-plane"></i>

@@ -8,6 +8,9 @@ use App\Models\Siswa;
 use App\Models\Tagihan;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Exception;
+use Midtrans\Snap;
+use Midtrans\Config;
 
 class TransactionController extends Controller
 {
@@ -63,13 +66,45 @@ class TransactionController extends Controller
 
             ]);
 
+
+
             // Simpan Data
             $transaction = Transaction::create([
                 'siswa_id' => $request->siswa_id,
                 'tagihan_id' => $request->tagihan_id,
-                'status' => 'PENDING',
+                'status' => $request->status,
                 'nominal' => $request->nominal,
             ]);
+
+            // jika status Pending hit ke midtrans
+            if ($request->status == "PENDING") {
+                // Config Midtrans
+                Config::$serverKey = config('services.midtrans.serverKey');
+                Config::$isProduction = config('services.midtrans.isProduction');
+                Config::$isSanitized = config('services.midtrans.isSanitized');
+                Config::$is3ds = config('services.midtrans.is3ds');
+
+                // Buat Aray untuk dikirim ke midtrans
+                $midtrans = [
+                    "transaction_details" => [
+                        "order_id" => $transaction->id,
+                        "gross_amount" => (int) $transaction->nominal,
+                    ],
+                    "customer_details" => [
+                        "first_name" => Auth::user()->name,
+                        "email" => Auth::user()->email,
+                    ],
+                    "enabled_payments" => [
+                        "gopay", "bank_transfer"
+                    ],
+                    "vtweb" => []
+                ];
+
+                $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+                $transaction->update([
+                    'midtrans_id' => $request->status == "PENDING" ? $paymentUrl : null,
+                ]);
+            }
 
             // Redirect
             return redirect()->route('admin.transactions.index')->with('success', 'Data ' . $transaction->siswa->name . ' berhasil ditambahkan!');
@@ -83,6 +118,49 @@ class TransactionController extends Controller
                 'tagihan_id.required' => 'Tagihan harus diisi!',
 
             ]);
+
+            // Jika Transaction Langsung 1 Kelas
+            $siswa = Siswa::where('kelas_id', $request->kelas_id)->get();
+            foreach ($siswa as $item) {
+
+
+                // Simpan Data
+                $transaction = Transaction::create([
+                    'siswa_id' => $item->id,
+                    'tagihan_id' => $request->tagihan_id,
+                    'status' => $request->status,
+                    'nominal' => $request->nominal,
+                ]);
+                // jika status Pending hit ke midtrans
+                if ($request->status == "PENDING") {
+                    // Config Midtrans
+                    Config::$serverKey = config('services.midtrans.serverKey');
+                    Config::$isProduction = config('services.midtrans.isProduction');
+                    Config::$isSanitized = config('services.midtrans.isSanitized');
+                    Config::$is3ds = config('services.midtrans.is3ds');
+
+                    // Buat Aray untuk dikirim ke midtrans
+                    $midtrans = [
+                        "transaction_details" => [
+                            "order_id" => $transaction->id,
+                            "gross_amount" => (int) $transaction->nominal,
+                        ],
+                        "customer_details" => [
+                            "first_name" => Auth::user()->name,
+                            "email" => Auth::user()->email,
+                        ],
+                        "enabled_payments" => [
+                            "gopay", "bank_transfer"
+                        ],
+                        "vtweb" => []
+                    ];
+
+                    $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+                    $transaction->update([
+                        'midtrans_id' => $request->status == "PENDING" ? $paymentUrl : null,
+                    ]);
+                }
+            }
         }
     }
 

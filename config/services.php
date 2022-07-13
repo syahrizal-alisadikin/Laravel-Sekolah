@@ -30,4 +30,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    //midtrans
+    'midtrans' => [
+        // Midtrans server key
+        'serverKey'     => env('MIDTRANS_SERVERKEY', "SB-Mid-server-U6cgpaJaFxL0XJxm5xyrP8UD"),
+        // Midtrans client key
+        'clientKey'     => env('MIDTRANS_CLIENTKEY', "SB-Mid-client-3f9qVKrA9FXrrE46"),
+        // Isi false jika masih tahap development dan true jika sudah di production, default false (development)
+        'isProduction'  => env('MIDTRANS_IS_PRODUCTION', false),
+        'isSanitized'   => env('MIDTRANS_IS_SANITIZED', true),
+        'is3ds'         => env('MIDTRANS_IS_3DS', true),
+    ],
 ];
