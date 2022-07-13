@@ -74,7 +74,7 @@ class SiswaController extends Controller
 
         // cari transaksi berdasarkan id
         $transaction = Transaction::find($order_id);
-
+        dd($transaction);
         // handle notif status
         if ($status == 'capture') {
             if ($type == 'credit_card') {
