@@ -19,7 +19,7 @@ class SiswaController extends Controller
                 return $query->where(function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->name . '%')
                         ->orwhere('nis', 'like', '%' . $request->name . '%');
-                })->where(function ($query) {
+                })->where(function ($query) use ($request) {
                     $query->where('email', 'like', '%' . $request->name . '%')
                         ->orwhere('phone', 'like', '%' . $request->name . '%');
                 });
