@@ -78,6 +78,7 @@ class TransactionController extends Controller
 
             // jika status Pending hit ke midtrans
             if ($request->status == "PENDING") {
+                $siswa = Siswa::find($request->siswa_id);
                 // Config Midtrans
                 Config::$serverKey = config('services.midtrans.serverKey');
                 Config::$isProduction = config('services.midtrans.isProduction');
@@ -91,8 +92,8 @@ class TransactionController extends Controller
                         "gross_amount" => (int) $transaction->nominal,
                     ],
                     "customer_details" => [
-                        "first_name" => Auth::user()->name,
-                        "email" => Auth::user()->email,
+                        "first_name" => $siswa->name,
+                        "email" => $siswa->email,
                     ],
                     "enabled_payments" => [
                         "gopay", "bank_transfer"
@@ -146,8 +147,8 @@ class TransactionController extends Controller
                             "gross_amount" => (int) $transaction->nominal,
                         ],
                         "customer_details" => [
-                            "first_name" => Auth::user()->name,
-                            "email" => Auth::user()->email,
+                            "first_name" => $item->name,
+                            "email" => $item->email,
                         ],
                         "enabled_payments" => [
                             "gopay", "bank_transfer"
