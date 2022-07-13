@@ -15,7 +15,8 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "rap2hpoutre/laravel-log-viewer": "2.2.0",
-        "spatie/laravel-permission": "5.5.3"
+        "spatie/laravel-permission": "5.5.3",
+        "midtrans/midtrans-php": "2.*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
