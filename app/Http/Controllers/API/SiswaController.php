@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
+use App\Models\Tagihan;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Notification;
@@ -112,5 +113,18 @@ class SiswaController extends Controller
 
         //simpan transaksi 
         $transaction->save();
+    }
+
+    public function tagihan()
+    {
+        $tagihan = Tagihan::all();
+
+        return response()->json([
+            "response" => [
+                "status"    => 200,
+                "message"   => "List Data Tagihan"
+            ],
+            "data" => $tagihan
+        ], 200);
     }
 }
