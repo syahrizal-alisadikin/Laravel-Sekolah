@@ -43,7 +43,7 @@ class SiswaController extends Controller
             ->whereHas('tagihan', function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->name . '%');
             })
-            ->with('siswa', 'tagihan')->paginate($request->rows);
+            ->with('siswa', 'tagihan')->latest()->paginate($request->rows);
 
         return response()->json([
             "response" => [
