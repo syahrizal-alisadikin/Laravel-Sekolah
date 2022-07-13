@@ -38,7 +38,6 @@ class SiswaController extends Controller
 
     public function transaction(Request $request)
     {
-        return $request->user();
         $transactions = Transaction::where('siswa_id', $request->user()->siswa->id)->with('siswa', 'tagihan')->get();
 
         return response()->json([
