@@ -51,6 +51,21 @@
                             </div>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <label>Status Pembayaran</label>
+                            <select name="status" class="form-select" id="">
+                                <option value="SUCCESS" {{ $transaction->status == "SUCCESS" ? "selected" : "" }}>SUCCESS</option>
+                                <option value="PENDING" {{ $transaction->status == "PENDING" ? "selected" : "" }}>PENDING</option>
+                                <option value="FAILED" {{ $transaction->status == "FAILED" ? "selected" : "" }}>FAILED</option>
+
+                            </select>
+                            @error('status')
+                            <div class="invalid-feedback" style="display: block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                       
 
                       

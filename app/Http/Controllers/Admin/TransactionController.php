@@ -122,6 +122,7 @@ class TransactionController extends Controller
         $transaction->update([
             'tagihan_id' => $request->tagihan_id,
             'nominal' => $request->nominal,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('admin.transactions.index')->with('success', 'Data ' . $transaction->siswa->name . ' berhasil diubah!');
