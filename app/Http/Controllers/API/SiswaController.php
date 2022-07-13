@@ -19,7 +19,7 @@ class SiswaController extends Controller
                 return $query->where('name', 'like', '%' . $request->name . '%');
             })
             ->whereNot('id', $request->user()->id)
-            ->paginate(2);
+            ->paginate($request->rows);
 
         return response()->json([
             "response" => [
