@@ -156,7 +156,7 @@ class TransactionController extends Controller
                         "vtweb" => []
                     ];
 
-                    $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+                    $paymentUrl = Snap::getSnapToken($midtrans)->redirect_url;
                     $transaction->update([
                         'midtrans_id' => $request->status == "PENDING" ? $paymentUrl : null,
                     ]);
