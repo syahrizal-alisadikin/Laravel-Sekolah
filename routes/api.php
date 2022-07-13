@@ -64,4 +64,4 @@ Route::get('/homepage/video', [VideoController::class, 'VideoHomepage']);
 Route::get('/friend', [SiswaController::class, 'friend'])->middleware('auth:sanctum');
 Route::get('/transactions', [SiswaController::class, 'transaction'])->middleware('auth:sanctum');
 
-Route::post('/callback/midtrans', [SiswaController::class, 'callback']);
+Route::post('/midtrans/callback', [SiswaController::class, 'callback']);
