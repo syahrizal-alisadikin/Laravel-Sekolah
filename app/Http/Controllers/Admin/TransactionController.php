@@ -162,6 +162,8 @@ class TransactionController extends Controller
                     ]);
                 }
             }
+
+            return redirect()->route('admin.transactions.index')->with('success', 'Data  berhasil ditambahkan!');
         }
     }
 
