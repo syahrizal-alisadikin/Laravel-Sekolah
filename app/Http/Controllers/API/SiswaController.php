@@ -19,9 +19,6 @@ class SiswaController extends Controller
                 return $query->where(function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->name . '%')
                         ->orwhere('nisn', 'like', '%' . $request->name . '%');
-                })->where(function ($query) use ($request) {
-                    $query->where('email', 'like', '%' . $request->name . '%')
-                        ->orwhere('phone', 'like', '%' . $request->name . '%');
                 });
             })
             ->whereNot('id', $request->user()->id)
