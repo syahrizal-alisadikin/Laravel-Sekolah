@@ -142,7 +142,6 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $transaction = Transaction::create([
             'siswa_id' => $request->user()->id,
             'tagihan_id' => $request->tagihan_id,
