@@ -55,6 +55,19 @@ class SiswaController extends Controller
         ], 200);
     }
 
+    public function DeleteTransaction($id)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->delete();
+
+        return response()->json([
+            "response" => [
+                "status"    => 200,
+                "message"   => "Data Transaction Berhasil Dihapus"
+            ]
+        ], 200);
+    }
+
     public function callback(Request $request)
     {
         // set konfigurasi midtrans
