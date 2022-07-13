@@ -67,4 +67,5 @@ Route::delete('/transactions/{id}', [SiswaController::class, 'DeleteTransaction'
 
 Route::get('/tagihan', [SiswaController::class, 'tagihan']);
 Route::get('/tagihan/{id}', [SiswaController::class, 'detailTagihan']);
+Route::post('/tagihan/store', [SiswaController::class, 'store']);
 Route::post('/midtrans/callback', [SiswaController::class, 'callback']);

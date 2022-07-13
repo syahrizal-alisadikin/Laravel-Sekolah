@@ -139,4 +139,49 @@ class SiswaController extends Controller
             "data" => $tagihan
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+        $transaction = Transaction::create([
+            'siswa_id' => $request->user()->id,
+            'tagihan_id' => $request->tagihan_id,
+            'status' => 'PENDING',
+            'nominal' => $request->nominal,
+        ]);
+
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
+
+        // Buat Aray untuk dikirim ke midtrans
+        $midtrans = [
+            "transaction_details" => [
+                "order_id" => $transaction->id,
+                "gross_amount" => (int) $transaction->nominal,
+            ],
+            "customer_details" => [
+                "first_name" => $request->user()->name,
+                "email" => $request->user()->email,
+            ],
+            "enabled_payments" => [
+                "gopay", "bank_transfer"
+            ],
+            "vtweb" => []
+        ];
+
+        $paymentUrl = Snap::getSnapToken($midtrans);
+        $transaction->update([
+            'midtrans_id' =>  $paymentUrl //midtrans_id diisi dengan hasil snap::getSnapToken(),
+        ]);
+
+        return response()->json([
+            "response" => [
+                "status"    => 200,
+                "message"   => "Data Transaction Berhasil Ditambahkan"
+            ],
+            "data" => $transaction
+        ], 200);
+    }
 }
