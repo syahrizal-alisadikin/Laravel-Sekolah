@@ -39,7 +39,11 @@ class SiswaController extends Controller
     public function transaction(Request $request)
     {
         $siswa = Siswa::find($request->user()->id);
-        $transactions = Transaction::where('siswa_id', $siswa->id)->with('siswa', 'tagihan')->paginate($request->rows);
+        $transactions = Transaction::where('siswa_id', $siswa->id)
+            ->whereHas('tagihan', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->name . '%');
+            })
+            ->with('siswa', 'tagihan')->paginate($request->rows);
 
         return response()->json([
             "response" => [
