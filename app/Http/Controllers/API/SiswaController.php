@@ -126,4 +126,17 @@ class SiswaController extends Controller
             "data" => $tagihan
         ], 200);
     }
+
+    public function detailTagihan($id)
+    {
+        $tagihan = Tagihan::find($id);
+
+        return response()->json([
+            "response" => [
+                "status"    => 200,
+                "message"   => "List Data Tagihan"
+            ],
+            "data" => $tagihan
+        ], 200);
+    }
 }

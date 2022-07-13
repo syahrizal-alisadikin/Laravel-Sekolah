@@ -66,4 +66,5 @@ Route::get('/transactions', [SiswaController::class, 'transaction'])->middleware
 Route::delete('/transactions/{id}', [SiswaController::class, 'DeleteTransaction'])->middleware('auth:sanctum');
 
 Route::get('/tagihan', [SiswaController::class, 'tagihan']);
+Route::get('/tagihan/{id}', [SiswaController::class, 'detailTagihan']);
 Route::post('/midtrans/callback', [SiswaController::class, 'callback']);
