@@ -82,10 +82,12 @@ class SiswaController extends Controller
                     $transaction->status = 'PENDING';
                 } else {
                     $transaction->status = 'SUCCESS';
+                    $transaction->tanggal_bayar = date('Y-m-d');
                 }
             }
         } else if ($status == 'settlement') {
             $transaction->status = 'SUCCESS';
+            $transaction->tanggal_bayar = date('Y-m-d');
         } else if ($status == 'pending') {
             $transaction->status = 'PENDING';
         } else if ($status == 'deny') {
