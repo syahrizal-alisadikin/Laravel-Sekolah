@@ -15,7 +15,7 @@ class SiswaController extends Controller
         // $user = $request->user();
 
         $friend = Siswa::where('kelas_id', $request->user()->kelas_id)
-            ->when($request->name, function ($query) {
+            ->when($request->name, function ($query) use ($request) {
                 return $query->where(function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->name . '%')
                         ->orwhere('nis', 'like', '%' . $request->name . '%');
